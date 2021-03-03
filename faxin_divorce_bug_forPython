@@ -1,0 +1,41 @@
+import requests
+import json
+url = "http://wenshu.faxin.cn/faxin/search/search"
+header = {
+"Host": "wenshu.faxin.cn",
+"Connection": "keep-alive",
+"Content-Length": "544",
+"Accept": "application/json, text/javascript, */*; q=0.01",
+"X-Requested-With": "XMLHttpRequest",
+"TENANT_ID": "2",
+"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36",
+"Content-Type": "application/json;charset=UTF-8",
+"Origin": "http://wenshu.faxin.cn",
+"Referer": "http://wenshu.faxin.cn/wenshu/page/result.html?type=b&backurl=http://www.faxin.cn/",
+"Accept-Encoding": "gzip, deflate",
+"Accept-Language": "zh-CN,zh;q=0.9"
+}
+p2=[
+    {"field": "casecause", "type": 2, "uniKey": "casecause_离婚纠纷", "value": "离婚纠纷"},
+    {"field": "judgedate", "type": 2, "uniKey": "judgedate_2017-01-21", "value": "2019-12-01", "operator": "gte"},
+    {"field": "judgedate", "type": 2, "uniKey": "judgedate_2017-02-21", "value": "2019-12-31", "operator": "lte"},
+    {"type": 2, "value": "四川省", "field": "province", "uniKey": "province_四川省"},
+    {"type": 2, "value": "普通案例", "field": "referencetype"}]
+p3=["_score desc","fit_score desc"]
+p4={
+"from":0,"size":100,"sort":p3
+}
+p5 ={"type":1,"mode":"default",
+          "and": p2}
+parameters  ={
+"query":p5,
+ "params":p4
+
+}
+
+
+def search(url):
+    res = requests.post(url,json=parameters,headers =header)
+    print(res.text)
+
+search(url)
